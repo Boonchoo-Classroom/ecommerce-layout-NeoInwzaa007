@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="scisrc.mobiledev.ecommercelayout.HomeFragment"
+        android:label="หน้าหลัก" />
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="scisrc.mobiledev.ecommercelayout.ProductsFragment"
+        android:label="รายการสินค้า" />
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="scisrc.mobiledev.ecommercelayout.CartFragment"
+        android:label="ตะกร้าสินค้า" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="scisrc.mobiledev.ecommercelayout.ProfileFragment"
+        android:label="โปรไฟล์" />
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="scisrc.mobiledev.ecommercelayout.FavoritesFragment"
+        android:label="รายการโปรด" />
+
+</navigation>

@@ -1,65 +1,82 @@
 package scisrc.mobiledev.ecommercelayout
 
 import android.os.Bundle
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar  // <-- Use androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import scisrc.mobiledev.ecommercelayout.databinding.ActivityMainBinding
-import scisrc.mobiledev.ecommercelayout.ui.HomeFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navigationView: NavigationView
+    private lateinit var toolbar: Toolbar
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
+
+        // Initialize views
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navigationView = findViewById(R.id.nav_view)
+        toolbar = findViewById(R.id.toolbar)
+
+        // Setup NavController
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
         // Setup toolbar
-        setSupportActionBar(binding.toolbar)
-
-        // Initialize navigation
-        drawerLayout = binding.drawerLayout
-
-        // Add hamburger icon
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            binding.toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        // Handle NavigationView item clicks
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_home -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, HomeFragment())
-                        .commit()
-                }
-
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
-        // Load default fragment
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, HomeFragment())
-                .commit()
-            binding.navView.setCheckedItem(R.id.nav_home)
+        // Setup NavigationView with NavController
+        navigationView.setupWithNavController(navController)
+
+        // Handle navigation drawer item clicks
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            drawerLayout.closeDrawers()
+            when (menuItem.itemId) {
+                R.id.nav_home -> navController.navigate(R.id.homeFragment)
+                R.id.nav_products -> navController.navigate(R.id.productsFragment)
+                R.id.nav_cart -> navController.navigate(R.id.cartFragment)
+                R.id.nav_profile -> navController.navigate(R.id.profileFragment)
+                R.id.nav_favorites -> navController.navigate(R.id.favoritesFragment)
+            }
+            true
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    override fun setSupportActionBar(toolbar: Toolbar?) {
+        // Implement setSupportActionBar if necessary
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }
