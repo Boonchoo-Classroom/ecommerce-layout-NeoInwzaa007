@@ -1,26 +1,34 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@color/light_gray">
 
     <ImageView
         android:id="@+id/bannerImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:contentDescription="@string/todo"
-        android:src="@drawable/banner_image" />
+        android:src="@drawable/banner_image"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/suggests" />
-
+        android:text="@string/suggests"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:padding="8dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/promotion" />
+        android:text="@string/promotion"
+        android:textSize="16sp"
+        android:textColor="@color/dark_gray"
+        android:padding="8dp" />
 
 </LinearLayout>

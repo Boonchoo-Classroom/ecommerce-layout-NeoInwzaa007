@@ -1,17 +1,26 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/light_gray">
 
+    <!-- รายการโปรด -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fav" />
+        android:text="@string/fav"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:paddingBottom="8dp" />
 
-    <!-- รายการโปรด -->
     <ListView
         android:id="@+id/favoritesList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        tools:ignore="AdapterViewChildren" />
 </LinearLayout>
